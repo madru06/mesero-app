@@ -1,0 +1,38 @@
+<mat-form-field>
+    <input matInput [matDatepicker]="picker" placeholder="Selecciona una fecha" [(ngModel)]="fechaSeleccionada">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>
+
+<button mat-raised-button color="primary" (click)="buscar()">Buscar</button>
+
+<mat-table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="cliente">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Cliente </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{ row.cliente.nombreCompleto }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="fechaPedido">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{ row.fechaPedido | date : 'dd-MM-yyyy' }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="total">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Total </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{ row.total | currency }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="acciones">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+            <button mat-icon-button color="primary" (click)="verDetalle(row)"><mat-icon aria-label="Ver">search</mat-icon></button>
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+</mat-table>
+
+<mat-paginator [pageSize]="10" [pageSizeOptions]="[5,10,25,100]" ></mat-paginator>

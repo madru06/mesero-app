@@ -1,0 +1,26 @@
+    <div [hidden]="true">
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="id" [(ngModel)]="plato.id">
+        </mat-form-field>
+    </div>
+
+    <div class="example-full-width">
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="Nombre del plato:" [(ngModel)]="plato.nombre">
+        </mat-form-field>
+    </div>
+
+    <div class="example-full-width">
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="Precio del plato:" type="number" [(ngModel)]="plato.precio">
+        </mat-form-field>
+    </div>
+    
+    <button mat-raised-button color="primary">
+        <mat-icon>done</mat-icon>
+        <span>Aceptar</span>
+    </button>
+    <button  mat-raised-button color="accent" (click)="cancelar()" type="button">
+        <mat-icon>close</mat-icon>
+        <span>Cancelar</span>
+    </button>

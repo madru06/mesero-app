@@ -1,0 +1,23 @@
+<mat-card>
+    <mat-card-header>
+        <div class="header-image"></div>
+        <mat-card-title>{{consumo.cliente.nombreCompleto}}</mat-card-title>
+        <mat-card-subtitle>Total: {{ consumo.total | currency }} - {{consumo.fechaPedido | date : 'dd-MM-yyyy HH:mm:ss'}} </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+        <mat-list role="list">
+            <mat-list-item role="list-item" *ngFor="let d of consumo.detalle">
+                {{ d.cantidad }} {{ d.plato.nombre }}  {{ d.plato.precio | currency }}
+            </mat-list-item>
+        </mat-list>
+    </mat-card-content>  
+
+    <mat-card-actions>
+        <button mat-raised-button color="accent" (click)="cerrar()" type="button">
+            <mat-icon>close</mat-icon>
+            <span>Cerrar</span>
+        </button>
+    </mat-card-actions> 
+
+</mat-card>

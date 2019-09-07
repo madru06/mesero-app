@@ -1,0 +1,76 @@
+<mat-toolbar>Registro de pedido</mat-toolbar>
+
+<form class="container" [formGroup]="form" (ngSubmit)="aceptar()">
+
+  <mat-form-field>
+    <input matInput placeholder="Cliente" type="text" [matAutocomplete]="autoCliente" [formControl]="ctrlCliente" 
+    formControlName="cliente">
+    <mat-autocomplete #autoCliente="matAutocomplete" [displayWith]="mostrarSeleccion" (optionSelected)="seleccionarCliente($event)">
+      <mat-option *ngFor="let c of clientesFiltrados | async" [value]="c">
+        {{ c.nombreCompleto }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Plato" type="text" [matAutocomplete]="autoPlato" [formControl]="ctrlPlato" 
+    formControlName="plato">
+    <mat-autocomplete #autoPlato="matAutocomplete" [displayWith]="mostrarSeleccionPlato" (optionSelected)="seleccionarPlato($event)">
+      <mat-option *ngFor="let p of platosFiltrados | async" [value]="p">
+        {{ p.nombre }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Cantidad" [(ngModel)]="cantidad" formControlName="cantidad">
+  </mat-form-field>
+
+  <button mat-raised-button color="accent" type="button" (click)="agregar()">Agregar</button>
+
+  <mat-table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="nombre">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Plato </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.plato.nombre }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="precio">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Precio </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.plato.precio }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="cantidad">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Cantidad </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.cantidad }} </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="subtotal">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Subtotal </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ (row.cantidad * row.plato.precio) | currency }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <button mat-icon-button color="accent" type="button" (click)="remover(row)">
+            <mat-icon aria-label="Remover">hightlight_off</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+      <mat-row *matRowDef="let row; columns : displayedColumns;">
+      </mat-row>
+
+  </mat-table>
+
+  <mat-card>Total : {{ total | currency }} </mat-card>
+
+  <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+
+  <button mat-raised-button color="primary" type="submit">Registrar</button>
+  <button mat-raised-button color="default" type="button" (click)="aceptarTransaccion()">Registrar Transaccion</button>
+
+</form>

@@ -1,0 +1,30 @@
+<form [formGroup]="form" (ngSubmit)="operar()" class="container">
+    <div [hidden]="true">
+        <mat-form-field>
+            <input matInput placeholder="Id" formControlName="id">
+        </mat-form-field>
+    </div>
+
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="Nombre del plato" formControlName="nombre">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="Precio del plato" formControlName="precio" type="number">
+    </mat-form-field>
+
+    <img mat-card-image [src]="urlImagen" *ngIf="urlImagen" style="width: 200px;">
+
+    <button mat-raised-button onclick="document.getElementById('inputSubir').click()" type="button">Imagen</button>
+    <input type="file" style="display: none;" id="inputSubir"  (change)="seleccionar($event)">
+    <p>{{labelFile}} </p>
+
+    <button mat-raised-button color="primary" type="submit">
+        <mat-icon>done</mat-icon>
+        <span>Aceptar</span>
+    </button>
+    <button  mat-raised-button color="accent" routerLink='/plato' type="button">
+        <mat-icon>close</mat-icon>
+        <span>Cancelar</span>
+    </button>
+</form>
